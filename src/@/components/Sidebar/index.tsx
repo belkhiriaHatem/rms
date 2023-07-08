@@ -50,7 +50,7 @@ const Sidebar = () => {
                     <Link href={href}>
                       <span
                         className={`flex cursor-pointer rounded-md p-1 text-base hover:text-accent ${
-                          router.asPath === href && "font-semibold"
+                          router.asPath === href ? "font-semibold" : ""
                         }`}
                       >
                         {title}
