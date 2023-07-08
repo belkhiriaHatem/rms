@@ -8,11 +8,11 @@ type DashboardLayoutProps = {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="relative flex h-screen flex-col">
       <Header />
       <div className="flex flex-grow">
         <Sidebar />
-        <div className="flex-grow p-5">{children}</div>
+        <div className="relative z-10 flex-grow p-5">{children}</div>
       </div>
       <Footer />
     </div>

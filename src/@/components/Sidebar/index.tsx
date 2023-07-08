@@ -1,53 +1,67 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { ChevronsLeft, ChevronsRight, Utensils } from "lucide-react";
 
 const Sidebar = () => {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
-     const menuItems = [
-       {
-         href: '/',
-         title: 'Homepage',
-       },
-       {
-         href: '/about',
-         title: 'About',
-       },
-       {
-         href: '/contact',
-         title: 'Contact',
-       },
-     ];
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const menuItems = [
+    {
+      href: "/",
+      title: "Homepage",
+    },
+    {
+      href: "/about",
+      title: "About",
+    },
+  ];
   return (
-    <div className="flex w-64 flex-col border-r p-5">
-      {/* <ul>
-        <li>
-          <Link href="/page1">Page 1</Link>
-        </li>
-        <li>
-          <Link href="/page2">Page 2</Link>
-        </li>
-      </ul> */}
-      <div className="flex flex-col md:flex-row flex-1">
-        <aside className="w-full md:w-60">
-          <nav>
-            <ul>
-              {menuItems.map(({ href, title }) => (
-                <li className="m-2" key={title}>
-                  <Link href={href}>
-                    <span
-                      className={`flex p-2 bg-accent text-accent-foreground font-semibold rounded cursor-pointer ${
-                        router.asPath === href && 'text-accent'
-                      }`}
-                    >
-                      {title}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
+    <div
+      className={`flex ${
+        isOpen ? "w-64" : "w-12"
+      } m-4 flex-col rounded-md bg-secondary p-4 transition-all duration-500`}
+    >
+      <div className="flex flex-1 flex-row gap-2">
+        <div className="flex justify-end rounded-md bg-accent opacity-30 transition-all duration-100 hover:opacity-100">
+          <button
+            className="rounded-md p-0.5 text-white"
+            onClick={toggleSidebar}
+            aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            {isOpen ? (
+              <ChevronsLeft className="h-3 w-3" />
+            ) : (
+              <ChevronsRight className="h-3 w-3" />
+            )}
+          </button>
+        </div>
+        {isOpen && (
+          <aside className="w-full">
+            <nav>
+              <ul>
+                {menuItems.map(({ href, title }) => (
+                  <li className="m-1" key={title}>
+                    <Link href={href}>
+                      <span
+                        className={`flex cursor-pointer rounded-md p-1 text-base hover:text-accent ${
+                          router.asPath === href && "font-semibold"
+                        }`}
+                      >
+                        {title}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+        )}
       </div>
     </div>
   );

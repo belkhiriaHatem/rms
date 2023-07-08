@@ -1,12 +1,22 @@
 import { Button } from "../ui/button";
+import { Utensils } from "lucide-react";
 
 const Header = () => {
   return (
-    <div className="flex items-center justify-between border-b p-4">
-      <h1>Dashboard Title</h1>
-      <div className="flex items-center gap-2">
-        <ModeToggle />
-        <ProfileSection />
+    <div className="sticky top-0 z-50 backdrop-blur-xl">
+      <div className="relative flex items-center justify-between p-4">
+        <div className="flex flex-row items-center gap-2">
+          <h1 className="scroll-m-20 text-2xl font-semibold tracking-widest text-primary">
+            LAMAMA
+          </h1>
+          <span className="flex h-[2rem] w-[2rem] animate-spin items-center justify-center rounded-full bg-secondary p-2 text-accent">
+            <Utensils className="animate-pulse" />
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <ModeToggle />
+          <ProfileSection />
+        </div>
       </div>
     </div>
   );
