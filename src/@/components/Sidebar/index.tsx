@@ -20,6 +20,10 @@ const Sidebar = () => {
       href: "/about",
       title: "About",
     },
+    {
+      href: "/item",
+      title: "Item",
+    },
   ];
   return (
     <div
@@ -28,7 +32,7 @@ const Sidebar = () => {
       } m-4 flex-col rounded-md bg-secondary p-4 transition-all duration-500`}
     >
       <div className="flex flex-1 flex-row gap-2">
-        <div className="flex justify-end rounded-md bg-accent opacity-30 transition-all duration-100 hover:opacity-100">
+        <div className="flex justify-end rounded-md bg-accent transition-all duration-100">
           <button
             className="rounded-md p-0.5 text-white"
             onClick={toggleSidebar}
