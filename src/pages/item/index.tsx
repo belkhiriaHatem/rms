@@ -6,7 +6,7 @@ import { columns } from "./columns";
 import { DataTable } from "~/@/components/ui/data-table";
 import { LoadingPage, LoadingSpinner } from "~/@/components/ui/loading";
 
-export default function index() {
+export default function ItemList() {
   const { data, error, loading, refetch } = useERPNextList(
     "/api/method/frappe.desk.reportview.get",
     {
@@ -53,7 +53,10 @@ export default function index() {
           ) : error ? (
             <p>Error!</p>
           ) : (
-            <DataTable columns={columns} data={data} />
+            <DataTable
+              columns={columns}
+              data={Array.isArray(data) ? data : []}
+            />
           )}
         </div>
       </div>

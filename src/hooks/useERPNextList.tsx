@@ -3,41 +3,51 @@ import { useState, useEffect } from "react";
 import instance from "~/utils/erpInstance";
 
 type UseERPNextListType = {
-  data: any;
+  data: object[] | Response | unknown;
   error: Error | null;
   loading: boolean;
   refetch: () => void;
 };
 
-function formatResponse(response: any) {
+type Response = {
+  message: {
+    keys: string[];
+    values: (string | null | number)[][];
+    user_info: object;
+  };
+};
+
+const formatResponse = (response: Response): object[] | Response => {
   if (
     response.hasOwnProperty("message") &&
-    response["message"].hasOwnProperty("keys") &&
-    response["message"].hasOwnProperty("values")
+    response.message.hasOwnProperty("keys") &&
+    response.message.hasOwnProperty("values")
   ) {
-    let formattedResponse: any[] = [];
-    let keys = response["message"]["keys"];
-    let values = response["message"]["values"];
+    const formattedResponse: object[] = [];
+    const keys = response.message.keys;
+    const values = response.message.values;
 
-    for (let value of values) {
-      let item: any = {};
-      for (let index = 0; index < value.length; index++) {
-        item[keys[index]] = value[index];
+    for (const value of values) {
+      const item: Record<string, string | null | number> = {};
+      for (const key of keys) {
+        const index = keys.indexOf(key);
+        const propertyValue = value[index];
+        item[key] = propertyValue !== undefined ? propertyValue : null;
       }
       formattedResponse.push(item);
     }
 
-    response = formattedResponse;
+    return formattedResponse;
   }
 
   return response;
-}
+};
 
 export const useERPNextList = (
   endpoint: string,
   reqData: any
 ): UseERPNextListType => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<Response | object[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { user, isSignedIn, isLoaded } = useUser();
@@ -46,21 +56,30 @@ export const useERPNextList = (
     setLoading(true);
     try {
       const response = await instance.post(endpoint, reqData);
-      setData(formatResponse(response.data));
+      setData(formatResponse(response.data as Response));
       setError(null);
-    } catch (err: any) {
-      setError(err);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) fetchList();
+    if (isLoaded && isSignedIn)
+      fetchList().catch((err) => {
+        console.log(err);
+      });
   }, [endpoint, user]);
 
-  const refetch = () => {
-    if (isLoaded && isSignedIn) fetchList();
+  const refetch = (): void => {
+    if (isLoaded && isSignedIn) {
+      fetchList().catch((err) => {
+        console.log(err);
+      });
+    }
   };
 
   return { data, error, loading, refetch };

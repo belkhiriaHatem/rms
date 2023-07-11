@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Utensils } from "lucide-react";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "~/@/components/ui/button";
 import { Checkbox } from "~/@/components/ui/checkbox";
@@ -51,9 +52,10 @@ export const columns: ColumnDef<Item>[] = [
       const image = row.getValue("image");
       if (image)
         return (
+          // to replace with next/image
           <img
             className="h-12 w-12 rounded-md object-contain transition-all duration-300 hover:scale-110"
-            src={process.env.NEXT_PUBLIC_ERP_URL! + image}
+            src={process.env.NEXT_PUBLIC_ERP_URL!.concat(image.toString())}
             alt="Beer"
           />
         );
@@ -69,7 +71,7 @@ export const columns: ColumnDef<Item>[] = [
         <div className="flex items-center gap-2">
           Code
           <Button
-            className="h-6 w-6 rounded-full"
+            className="h-6 w-6 rounded-full transition-all duration-200 hover:scale-95 active:scale-95"
             size="icon"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
@@ -104,7 +106,7 @@ export const columns: ColumnDef<Item>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(item.item_code)}
+              // onClick={() => navigator.clipboard.writeText(item.item_code)}
               >
                 Copy Item ID
               </DropdownMenuItem>
