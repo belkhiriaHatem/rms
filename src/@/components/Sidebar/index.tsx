@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { ChevronsLeft, ChevronsRight, Utensils } from "lucide-react";
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
 const Sidebar = () => {
   const router = useRouter();

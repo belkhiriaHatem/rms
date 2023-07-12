@@ -33,7 +33,7 @@ export default function ItemList() {
             Item List
           </h2>
           <div className="flex gap-2">
-            <Button variant={"secondary"} onClick={() => refetch()}>
+            <Button variant={"secondary"} size={"sm"} onClick={() => refetch()}>
               {loading ? (
                 <div className="flex items-center gap-1">
                   <LoadingSpinner size={18} />
@@ -43,8 +43,12 @@ export default function ItemList() {
                 <span>Refetch</span>
               )}
             </Button>
-            <Button variant={"default"}>Add Item</Button>
-            <Button variant={"destructive"}>Import</Button>
+            <Button variant={"default"} size={"sm"}>
+              Add Item
+            </Button>
+            <Button variant={"destructive"} size={"sm"}>
+              Import
+            </Button>
           </div>
         </header>
         <div className="p-5">

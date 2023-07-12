@@ -59,17 +59,9 @@ function ModeToggle() {
   );
 }
 
-import {
-  SignInButton,
-  SignOutButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 function ProfileSection() {
-  const user = useUser();
   return (
     <div>
       <SignedIn>

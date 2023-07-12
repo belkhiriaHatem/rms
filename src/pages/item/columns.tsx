@@ -1,9 +1,9 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Utensils } from "lucide-react";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
-import Image from "next/image";
+// import Image from "next/image";
 
 import { Button } from "~/@/components/ui/button";
 import { Checkbox } from "~/@/components/ui/checkbox";
@@ -23,6 +23,18 @@ export type Item = {
   item_name: string;
   item_group: string;
   image: string | null;
+};
+
+const copyToClipboard = async (text: string) => {
+  if (!navigator.clipboard) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    alert("Failed to copy text!");
+  }
 };
 
 export const columns: ColumnDef<Item>[] = [
@@ -50,12 +62,12 @@ export const columns: ColumnDef<Item>[] = [
     header: "",
     cell: ({ row }) => {
       const image = row.getValue("image");
-      if (image)
+      if (image && process.env.NEXT_PUBLIC_ERP_URL)
         return (
           // to replace with next/image
           <img
             className="h-12 w-12 rounded-md object-contain transition-all duration-300 hover:scale-110"
-            src={process.env.NEXT_PUBLIC_ERP_URL!.concat(image.toString())}
+            src={process.env.NEXT_PUBLIC_ERP_URL.concat(image.toString() ?? "")}
             alt="Beer"
           />
         );
@@ -106,7 +118,9 @@ export const columns: ColumnDef<Item>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-              // onClick={() => navigator.clipboard.writeText(item.item_code)}
+                onClick={() => {
+                  void copyToClipboard(item.item_code);
+                }}
               >
                 Copy Item ID
               </DropdownMenuItem>
