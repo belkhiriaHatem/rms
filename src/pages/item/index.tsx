@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { Button } from "~/@/components/ui/button";
 import { useERPNextList } from "~/hooks/useERPNextList";
-import { columns } from "./columns";
+import { columns } from "~/@/lib/columns/item/columns";
 import { DataTable } from "~/@/components/ui/data-table";
 import { LoadingPage, LoadingSpinner } from "~/@/components/ui/loading";
 
