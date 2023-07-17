@@ -3,13 +3,13 @@ import { Utensils } from "lucide-react";
 
 const Header = () => {
   return (
-    <div className="sticky top-0 z-50 backdrop-blur-xl">
+    <div className="gradient-backdrop-blur sticky top-0 z-50 backdrop-blur-xl">
       <div className="relative flex items-center justify-between p-4">
         <div className="flex flex-row items-center gap-2">
           <h1 className="scroll-m-20 text-2xl font-semibold tracking-widest text-primary">
             RMS
           </h1>
-          <span className="flex h-[2rem] w-[2rem] animate-spin items-center justify-center rounded-full bg-secondary p-2 text-accent">
+          <span className="flex h-[2rem] w-[2rem] items-center justify-center rounded-full bg-secondary p-2 text-accent">
             <Utensils className="animate-pulse" />
           </span>
         </div>
